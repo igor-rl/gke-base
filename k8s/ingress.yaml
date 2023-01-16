@@ -1,0 +1,37 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-host
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt"
+    # ingress.kubernetes.io/force-ssl-redirect: "true"
+  labels:
+    name: ingress-host
+spec:
+  rules:
+  - host: lojaonline.hostwit.com.br
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: goserver-service
+            port: 
+              number: 80
+  - host: pg.hostwit.com.br
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: postgres
+            port: 
+              number: 5432
+  tls:
+  - hosts:
+    - "lojaonline.hostwit.com.br"
+    - "pg.hostwit.com.br"
+    secretName: letsencrypt-tls
