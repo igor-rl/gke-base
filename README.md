@@ -172,7 +172,7 @@ watch kubectl get hpa</code></pre>
 
 <hr>
 
-### 4) Cert-manager
+### 5) Cert-manager
 <p>O <a href="https://cert-manager.io/docs/installation/kubectl/">cert-manager</a> insere certificados de surança para a sua aplicação sem custo.</p>
 <ul>
     permissão para p gcloud

@@ -7,10 +7,10 @@ metadata:
 spec:
   containers:
   - name: exemplo
-    image: igorlage/crm-front:latest
+    image: igorlage/lojavirtual
     resources:
       limits:
-        memory: "128Mi"
+        memory: "28Mi"
         cpu: "500m"
     ports:
-      - containerPort: 4200
+      - containerPort: 8080
