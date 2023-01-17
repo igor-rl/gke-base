@@ -27,7 +27,7 @@ spec:
               memory: 250Mi
 
           ports:
-            - containerPort: 8000
+            - containerPort: 8080
 
           envFrom:
             - configMapRef:
