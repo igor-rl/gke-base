@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lojavirtual-front
+spec:
+  selector:
+    matchLabels:
+      app: lojavirtual-front
+  template:
+    metadata:
+      labels:
+        app: lojavirtual-front
+    spec:
+      containers:
+      - name: lojavirtual-front
+        image: igorlage/crm-front
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 4200

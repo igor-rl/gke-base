@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
         - name: goserver
-          image: "igorlage/hello-go:v9.0.2"
-          
+          image: "wesleywillians/hello-go:v9.6"
+
           resources:
             requests: 
               cpu: "0.05"
@@ -26,36 +26,37 @@ spec:
               cpu: "0.05"
               memory: 25Mi
 
-          startupProbe: # verifica a cada x segundos se a aplicação subiu, se sim, continua, para readinessProbe e livenessProbe
+          startupProbe:
             httpGet:
               path: /healthz
-              port: 80
-            periodSeconds: 3 # verificação por x segundos
-            failureThreshold: 1 # reiniciar o container em x retornos de erro
-          
-          readinessProbe:  # verificar se aplicação está pronta
-            httpGet:
-              path: /healthz
-              port: 80
-            periodSeconds: 3 # verificação de quanto em quanto tempo?
-            failureThreshold: 1 # reiniciar o container a partir de quantos retornos de erro
-            timeoutSeconds: 1 # tempo limite para retornar um erro de timeout
+              port: 8000
+            periodSeconds: 4
+            failureThreshold: 30
 
-          livenessProbe: # verificar se a apliucação está funcionando
+          readinessProbe:
             httpGet:
               path: /healthz
-              port: 80
-            periodSeconds: 5 # verificação de quanto em quanto tempo?
-            failureThreshold: 1 # reiniciar o container a partir de quantos retornos de erro
-            timeoutSeconds: 1 # tempo limite para retornar um erro de timeout
-            successThreshold: 1 # quantidade de testes
+              port: 8000
+            periodSeconds: 3
+            failureThreshold: 1
+            # initialDelaySeconds: 10
+
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            periodSeconds: 5
+            failureThreshold: 1
+            timeoutSeconds: 1
+            successThreshold: 1
+            # initialDelaySeconds: 15
 
           envFrom:
             - configMapRef:
                 name: goserver-env
             - secretRef:
                 name: goserver-secret
-
+          
           volumeMounts:
             - mountPath: "/go/myfamily"
               name: config
@@ -74,4 +75,4 @@ spec:
             items:
             - key: members
               path: "family.txt"  
-
+      

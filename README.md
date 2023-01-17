@@ -123,7 +123,7 @@ watch kubectl get hpa</code></pre>
 
 <hr>
 
-### 3) Implantar o projeto
+### 3) Implantar o projeto no GKE
 <ul>
     Deploy da aplicação em desenvolvimento:
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
@@ -133,15 +133,7 @@ watch kubectl get hpa</code></pre>
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>kubectl get --all</code></pre>
     </div>
-
-</ul>
-
-<hr>
-
-# Implantar projeto no GKE
-> <a href="https://cloud.google.com/sdk/docs/install#deb">gcloud cli</a>
-<ul>
-    inicie os serviços do gcloud
+    inicie os serviços do <a href="https://cloud.google.com/sdk/docs/install#deb">gcloud cli</a>
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>gcloud init</code></pre>
     </div>
@@ -153,10 +145,18 @@ watch kubectl get hpa</code></pre>
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>kubectl apply -f k8s/</code></pre>
     </div>
+
 </ul>
 
-> <a href="https://github.com/kubernetes/ingress-nginx/blob/main/docs/deploy/index.md">ingress-nginx</a>.  O ingress funciona como um roteador dos serviços do seu projeto. Com ele, você não precisa criar vários serviços do tipo loadbalance a fim de ter um ipexterno para acessar o serviço fora do seu cluster. Basta configurar o arquivo ingress.html para rotear seus endpoints para qualquer serviço do tipo ClusterIp.
+<hr>
+
+### 4) Ingress
+<p>O <a href="https://github.com/kubernetes/ingress-nginx/blob/main/docs/deploy/index.md">ingress-nginx</a> funciona como um roteador dos serviços do seu projeto. Com ele, você não precisa criar vários serviços do tipo loadbalance a fim de ter um ipexterno para acessar o serviço fora do seu cluster. Basta configurar o arquivo ingress.html para rotear seus endpoints para qualquer serviço do tipo ClusterIp.</p>
 <ul>
+    Implantar os serviços do ingress
+    <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+        <pre class="notranslate"><code>kubectl apply -f k8s/ingress-nginx-gcloud.yaml</code></pre>
+    </div>
     permitir o uso do ingress no gcloud
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>kubectl create clusterrolebinding cluster-admin-binding \<br>
@@ -170,7 +170,10 @@ watch kubectl get hpa</code></pre>
     insira o ip do ingress-nginx-controller no ipv4 do seu seu domínio. Para isso é necessário ter um domínio. Caso precise de um gerenciador de domínios e DNS, utilize o <a href=https://www.cloudflare.com/pt-br/>Cloudflare</a>.
 </ul>
 
-> <a href="https://cert-manager.io/docs/installation/kubectl/">cert-manager</a>
+<hr>
+
+### 4) Cert-manager
+<p>O <a href="https://cert-manager.io/docs/installation/kubectl/">cert-manager</a> insere certificados de surança para a sua aplicação sem custo.</p>
 <ul>
     permissão para p gcloud
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
@@ -211,7 +214,7 @@ watch kubectl get hpa</code></pre>
 ### COMANDOS ÚTEIS
 
 ### <li>Kubernetes</li>
-<ul>excluir um namespace: https://phoenixnap.com/kb/kubernetes-delete-namespace
+<ul><a href="https://phoenixnap.com/kb/kubernetes-delete-namespace">excluir um namespace</a>.<br><br>
     Verificando a aplicação
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>kubectl get all</code></pre>
