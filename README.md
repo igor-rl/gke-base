@@ -40,11 +40,11 @@ Esse guia contém as seguintes configurações:<br>
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>sudo apt-get install curl</code><br><code>curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash</code><br><code>nvm install --lts</code><br><code>nvm install node</code><br><code></code></pre>
     </div>
-    Verificar a versão do node
+    Verificar a versão do node:
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>node --version</code></pre>
     </div>
-    Verificar a versão do npm
+    Verificar a versão do npm:
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>npm --version</code></pre>
     </div>
@@ -60,10 +60,10 @@ Esse guia contém as seguintes configurações:<br>
 
 
 ### <li> Kubernetes</li>
-> instale o <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/">kubernets</a>
+> Instale o <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/">kubernets.</a>
 
 ### <li> Kind</li>
-> instalar o <a href="https://kind.sigs.k8s.io/">KIND</a> (kubernetes in docker)
+> Instalar o <a href="https://kind.sigs.k8s.io/">KIND</a> (kubernetes in docker).
 
 ### <li> Metrics-server</li>
 > Permite o escalonamento automático em http para ambiente de desenvolvimento. Baixe o arquivo de download:
@@ -77,13 +77,13 @@ Esse guia contém as seguintes configurações:<br>
     <pre class="notranslate"><code>- --kubelet-insecure-tls</code></pre>
 </div>
 
-> Aplique e verifique a instalação do metrics executando o comando abaixo e procure pelo service "kube-system/metrics-server"
+> Aplique e verifique a instalação do metrics executando o comando abaixo e procure pelo service "kube-system/metrics-server".
 <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
     <pre class="notranslate"><code>kubectl apply -f metrics.yaml<br>
 kubectl get apiservices</code></pre>
 </div>
 
-> Se o status estiver "true", parabéns! Você insttalou o  metrics-server com sucesso.
+> Se o status estiver "true", parabéns! Você instalou o  metrics-server com sucesso.
 
 ### <li> HPA</li>
 > O próximo passo é iniciar o serviço do hpa (horizontal pod Autoscaler). Em produção os fornecedores de hospedagem em nuvem já possuem ferramentas para autosccaale dos pods.
@@ -103,19 +103,19 @@ watch kubectl get hpa</code></pre>
 
 ### 2) Iniciando os serviços
 <ul>
-    Iniciar o docker
+    Iniciar o docker:
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>sudo service docker start</code></pre>
     </div>
-    login no dockerhub
+    Login no dockerhub:
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>docker login</code></pre>
     </div>
-    Criando um Cluster (desenvolvimento)
+    Criando um Cluster (desenvolvimento):
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>kind create cluster --name base-gke</code></pre>
     </div>
-    Criando um Cluster (produção)
+    Criando um Cluster (GKE):
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>gcloud container clusters create-auto base-gke-cluster --region us-central1</code></pre>
     </div>
@@ -125,25 +125,21 @@ watch kubectl get hpa</code></pre>
 
 ### 3) Implantar o projeto no GKE
 <ul>
-    Deploy da aplicação em desenvolvimento:
-    <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-        <pre class="notranslate"><code>kubectl apply -f k8s/</code></pre>
-    </div>
-    O arquivo deploy é o responsável por configurar os deploys, pods, services, secrets e volumes persistentes. Para ver o status de todo o projeto execute o comando:
-    <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-        <pre class="notranslate"><code>kubectl get --all</code></pre>
-    </div>
-    inicie os serviços do <a href="https://cloud.google.com/sdk/docs/install#deb">gcloud cli</a>
+    Inicie os serviços do <a href="https://cloud.google.com/sdk/docs/install#deb">gcloud cli</a>:
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>gcloud init</code></pre>
     </div>
-    selecione um projeto do gcloud
+    Selecione um projeto do gcloud:
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>gcloud container clusters get-credentials cluster_name --region cluster_region --project project_name</code></pre>
     </div>
-    implemente o projeto no cluster gcloud
+    Implante o projeto no cluster gcloud:
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>kubectl apply -f k8s/</code></pre>
+    </div>
+    Para acompanhar o status de todo o projeto execute o comando:
+    <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+        <pre class="notranslate"><code>watch kubectl get --all</code></pre>
     </div>
 
 </ul>
@@ -151,23 +147,23 @@ watch kubectl get hpa</code></pre>
 <hr>
 
 ### 4) Ingress
-<p>O <a href="https://github.com/kubernetes/ingress-nginx/blob/main/docs/deploy/index.md">ingress-nginx</a> funciona como um roteador dos serviços do seu projeto. Com ele, você não precisa criar vários serviços do tipo loadbalance a fim de ter um ipexterno para acessar o serviço fora do seu cluster. Basta configurar o arquivo ingress.html para rotear seus endpoints para qualquer serviço do tipo ClusterIp.</p>
+<p>O <a href="https://github.com/kubernetes/ingress-nginx/blob/main/docs/deploy/index.md">ingress-nginx</a> funciona como um roteador dos serviços do seu projeto. Com ele, você não precisa criar vários serviços do tipo loadbalance a fim de ter um ip externo para acessar cada serviço do seu cluster. Basta configurar o arquivo ingress.html para rotear seus endpoints para qualquer serviço do tipo ClusterIp.</p>
 <ul>
-    Implantar os serviços do ingress
+    Implantar os serviços do ingress:
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>kubectl apply -f k8s/ingress-nginx-gcloud.yaml</code></pre>
     </div>
-    permitir o uso do ingress no gcloud
+    Permitir o uso do ingress no gcloud:
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>kubectl create clusterrolebinding cluster-admin-binding \<br>
 --clusterrole=cluster-admin \<br>
---user=$(gcloud config get-value core/account)
-    recupere o ip externo do ingress</code></pre>
+--user=$(gcloud config get-value core/account)</code></pre>
     </div>
+    Recupere o ip externo do ingress:
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>kubectl get service ingress-nginx-controller --namespace=ingress-nginx</code></pre>
     </div>
-    insira o ip do ingress-nginx-controller no ipv4 do seu seu domínio. Para isso é necessário ter um domínio. Caso precise de um gerenciador de domínios e DNS, utilize o <a href=https://www.cloudflare.com/pt-br/>Cloudflare</a>.
+    Insira o ip do ingress-nginx-controller no ipv4 do seu seu domínio. Caso precise de um gerenciador de domínios e DNS, utilize o <a href=https://www.cloudflare.com/pt-br/>Cloudflare</a>.
 </ul>
 
 <hr>
@@ -175,38 +171,39 @@ watch kubectl get hpa</code></pre>
 ### 5) Cert-manager
 <p>O <a href="https://cert-manager.io/docs/installation/kubectl/">cert-manager</a> insere certificados de surança para a sua aplicação sem custo.</p>
 <ul>
-    permissão para p gcloud
+    Permissão para p gcloud:
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>kubectl create clusterrolebinding cluster-admin-binding \<br>
 --clusterrole=cluster-admin \<br>
 --user=$(gcloud config get-value core/account)</code></pre>
     </div>
-    implemente o arquivo cert-maneger
+    Implemente o arquivo cert-maneger:
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>kubectl apply -f k8s/cert-manager.yaml</code></pre>
     </div>
-    verificar se os pods estão ativos
+    Verificar se os pods estão ativos:
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>kubectl get pods -n cert-manager</code></pre>
     </div>
-    aplicar as configurações do cluster-issuer
+    Aplicar as configurações do cluster-issuer:
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>kubectl apply -f k8s/cluster-issuer.yaml</code></pre>
     </div>
-    aplicar as configurações do ingress.yaml
+    Aplicar as configurações do ingress.yaml:
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>kubectl apply -f k8s/ingress.yaml</code></pre>
     </div>
-    recuperar certificados e aguardar status = true
+    Recuperar certificados e aguardar status = true:
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>kubectl get certificates</code></pre>
     </div>
-    detalhar certificado
+    Detalhar certificado:
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>kubectl describe certificate nome_do_certificado</code></pre>
     </div>
 </ul>
 
+<p>Parabéns, você concluiu a implantação do projeto base no GKE!</p>
 
 
 <hr>
