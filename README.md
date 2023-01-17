@@ -111,9 +111,13 @@ watch kubectl get hpa</code></pre>
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>docker login</code></pre>
     </div>
-    Criando um Cluster
+    Criando um Cluster (desenvolvimento)
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-        <pre class="notranslate"><code>kind create cluster --name lojavirtual</code></pre>
+        <pre class="notranslate"><code>kind create cluster --name base-gke</code></pre>
+    </div>
+    Criando um Cluster (produção)
+    <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+        <pre class="notranslate"><code>gcloud container clusters create-auto base-gke-cluster --region us-central1</code></pre>
     </div>
 </ul>
 
@@ -151,12 +155,19 @@ watch kubectl get hpa</code></pre>
     </div>
 </ul>
 
-> <a href="https://github.com/kubernetes/ingress-nginx/blob/main/docs/deploy/index.md">ingress-nginx</a>
+> <a href="https://github.com/kubernetes/ingress-nginx/blob/main/docs/deploy/index.md">ingress-nginx</a>.  O ingress funciona como um roteador dos serviços do seu projeto. Com ele, você não precisa criar vários serviços do tipo loadbalance a fim de ter um ipexterno para acessar o serviço fora do seu cluster. Basta configurar o arquivo ingress.html para rotear seus endpoints para qualquer serviço do tipo ClusterIp.
 <ul>
-    recupere o id externo do ingress
+    permitir o uso do ingress no gcloud
+    <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+        <pre class="notranslate"><code>kubectl create clusterrolebinding cluster-admin-binding \<br>
+--clusterrole=cluster-admin \<br>
+--user=$(gcloud config get-value core/account)
+    recupere o ip externo do ingress</code></pre>
+    </div>
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>kubectl get service ingress-nginx-controller --namespace=ingress-nginx</code></pre>
     </div>
+    insira o ip do ingress-nginx-controller no ipv4 do seu seu domínio. Para isso é necessário ter um domínio. Caso precise de um gerenciador de domínios e DNS, utilize o <a href=https://www.cloudflare.com/pt-br/>Cloudflare</a>.
 </ul>
 
 > <a href="https://cert-manager.io/docs/installation/kubectl/">cert-manager</a>
@@ -200,7 +211,7 @@ watch kubectl get hpa</code></pre>
 ### COMANDOS ÚTEIS
 
 ### <li>Kubernetes</li>
-<ul>
+<ul>excluir um namespace: https://phoenixnap.com/kb/kubernetes-delete-namespace
     Verificando a aplicação
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>kubectl get all</code></pre>
@@ -291,11 +302,11 @@ kubectl delete pvc nome_do_pv</code></pre>
     </div>
     Remover containers
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-        <pre class="notranslate"><code>docker rm -v ex-pagamento-app ex-pagamento-db</code></pre>
+        <pre class="notranslate"><code>docker rm -v nome_app nome_db</code></pre>
     </div>
     Remover imagens
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-        <pre class="notranslate"><code>docker rmi ex-pagamento-api-app ex-pagamento-api-db</code></pre>
+        <pre class="notranslate"><code>docker rmi nome_api-app nome_api-db</code></pre>
     </div>
 </ul>
 

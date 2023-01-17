@@ -20,18 +20,7 @@ spec:
             name: goserver-service
             port: 
               number: 80
-  - host: pg.hostwit.com.br
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: postgres
-            port: 
-              number: 5432
   tls:
   - hosts:
     - "lojaonline.hostwit.com.br"
-    - "pg.hostwit.com.br"
     secretName: letsencrypt-tls
