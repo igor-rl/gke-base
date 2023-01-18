@@ -15,43 +15,42 @@
 
 <p>Este guia de estudo exemplifica como criar um serviço de bancos de dados voltado para ambiente de desenvolvimento e de produção. O banco de dados utiliazado é o postgreSQL. Siga as instruções desse guia para criar um serviço de banco de dados no google cloud para armazernar e acessar seus dados localmente ou num provedor de nuvem.<br>
 
-## ÍNDICE
-<li><a href="">Requisitos do sistema</a></li>
+<hr>
+
+### Índice
+<li><a href="">Requisitos do sistema de desenvolvimento</a></li>
 <li><a href="">Banco de dados local com Docker - desenvolvimento</a></li>
 <li><a href="">Banco de dados Kubernetes - desenvolvimento</a></li>
 <li><a href="">Banco de dados Google SQL - produção</a></li>
 
 <hr>
 
-### 1) Requisitos
+### Requisitos do sistema de desenvolvimento
+
 <li><a href="visual studio code">Visual studio code</a></li>
+
 <li><a href="https://learn.microsoft.com/pt-br/windows/wsl/install">Subsistema do Windows para Linux</a></li>
-<li>Instalar o nodejs e o npm</li>
-<ul>
-    <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-        <pre class="notranslate"><code>sudo apt-get install curl</code><br><code>curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash</code><br><code>nvm install --lts</code><br><code>nvm install node</code><br><code></code></pre>
-    </div>
-    Verificar a versão do node:
-    <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-        <pre class="notranslate"><code>node --version</code></pre>
-    </div>
-    Verificar a versão do npm:
-    <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-        <pre class="notranslate"><code>npm --version</code></pre>
-    </div>
+
+<li><a href="https://docs.docker.com/engine/install/ubuntu/">Docker Engine</a></li>
+
+<li><a href="https://learn.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-wsl">Instalar o nodejs e o npm</a></li>
+
+<li><a href="https://www.youtube.com/watch?v=7kZODMP8bs0&ab_channel=HansM.Boron">Zshell (opcional)</a>
+
+<li><a href="https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/">kubernets</a></li>
+
+<li><a href="https://cloud.google.com/sdk/docs/install#deb">gcloud cli</a></li>
+
 </ul>
 
-### <li> ZSHELL (opcional)</li>
-<p> O zsh é uma ferramenta facilitadora que ajuda a formatar e armazenar o histórico de comandos para o terminal do linux. A instalação é um pouco complexa e você pode perder alguns minutos nisso. Mas vale o investimento. Você vai ganhar muito em performace e produtividade ao programar.</p>
+<hr>
 
-> <a href="https://www.youtube.com/watch?v=7kZODMP8bs0&ab_channel=HansM.Boron">vídeo explicativo</a> <br>
-> <a href="https://github.com/ohmyzsh/ohmyzsh">OhMyZsh</a> <br>
-> <a href="https://github.com/zdharma/zi#installation">Zinit</a> <br>
-> <a href="https://github.com/ohmyzsh/ohmyzsh/wiki/Themes">Temas</a> <br>
+### Banco de dados local com Docker - desenvolvimento
 
+<hr>
 
-### <li> Kubernetes</li>
-> Instale o <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/">kubernets.</a>
+### Banco de dados Kubernetes - desenvolvimento
 
-### <li> Kind</li>
-> Instalar o <a href="https://kind.sigs.k8s.io/">KIND</a> (kubernetes in docker).
+<hr>
+
+### Banco de dados Google SQL - produção
