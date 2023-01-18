@@ -207,7 +207,7 @@ watch kubectl get hpa</code></pre>
     </div>
 </ul>
 
-<p>Parabéns! Você concluiu a implantação do projeto base no GKE.<br>O próximo passo é implantar o serviço do banco de dados. Veja como configurar o banco de dados postgres e configurar suas variáveis de ambiente usando kubernetes <a href="">aqui</a>.</p>
+<p>Parabéns! Você concluiu a implantação do projeto base no GKE.<br>O próximo passo é implantar o serviço do banco de dados. Veja como configurar o banco de dados postgres e configurar suas variáveis de ambiente usando kubernetes <a href="https://github.com/igorRL/gke-base/tree/master/postgres">aqui</a>.</p>
 
 
 <hr>
