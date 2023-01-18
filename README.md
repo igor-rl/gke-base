@@ -66,24 +66,28 @@ Esse guia contém as seguintes configurações:<br>
 > Instalar o <a href="https://kind.sigs.k8s.io/">KIND</a> (kubernetes in docker).
 
 ### <li> Metrics-server</li>
-> Permite o escalonamento automático em http para ambiente de desenvolvimento. Baixe o arquivo de download:
+> O metric-server permite o escalonamento automático dos seus nós em http para ambiente de desenvolvimento. As configurações do metric server já estão definidas neste projeto. Por isso, você não precisa seguir os passos de instalação. Mas caso precise instalar o metric-server em outro ambiente, primeiro, baixe o arquivo de download:
 <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
     <pre class="notranslate"><code>wget https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml</code></pre>
 </div>
 
 > Renomeie o arquivo "components.yaml" para "metrics-server.yaml".<br>
-> Pesquise por "- --kubelet-use-node-status-port" e insira abaixo dele o comando:
+> Abra o arquivo e pesquise por "- --kubelet-use-node-status-port". Abaixo deste comando, insira o comando:
 <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
     <pre class="notranslate"><code>- --kubelet-insecure-tls</code></pre>
 </div>
 
-> Aplique e verifique a instalação do metrics executando o comando abaixo e procure pelo service "kube-system/metrics-server".
+> Salve o arquivo. Agora basta aplicar as configurações do metric-server no seu projeto.
 <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-    <pre class="notranslate"><code>kubectl apply -f metrics.yaml<br>
-kubectl get apiservices</code></pre>
+    <pre class="notranslate"><code>kubectl apply -f metrics.yaml</code></pre>
 </div>
 
-> Se o status estiver "true", parabéns! Você instalou o  metrics-server com sucesso.
+> Para verificar se a instalação do metrics ocorreu bem, execute o comando abaixo e procure pelo service "kube-system/metrics-server"
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+    <pre class="notranslate"><code>kubectl get apiservices</code></pre>
+</div>
+
+> Se o status estiver "true", parabéns! Você insttalou o  metrics-server com sucesso.
 
 ### <li> HPA</li>
 > O próximo passo é iniciar o serviço do hpa (horizontal pod Autoscaler). Em produção os fornecedores de hospedagem em nuvem já possuem ferramentas para autosccaale dos pods.
@@ -203,7 +207,7 @@ watch kubectl get hpa</code></pre>
     </div>
 </ul>
 
-<p>Parabéns, você concluiu a implantação do projeto base no GKE!</p>
+<p>Parabéns! Você concluiu a implantação do projeto base no GKE.<br>O próximo passo é implantar o serviço do banco de dados. Veja como configurar o banco de dados postgres e configurar suas variáveis de ambiente usando kubernetes <a href="">aqui</a>.</p>
 
 
 <hr>
