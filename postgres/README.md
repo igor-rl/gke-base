@@ -16,7 +16,7 @@
 <p>Este guia de estudo exemplifica como criar um serviço de bancos de dados voltado para ambiente de desenvolvimento e de produção. O banco de dados utiliazado é o postgreSQL. Siga as instruções desse guia para criar um serviço de banco de dados no google cloud para armazernar e acessar seus dados localmente ou num provedor de nuvem.<br>
 
 ## ÍNDICE
-<li><a href="">Instalando as dependências</a></li>
+<li><a href="">Requisitos do sistema</a></li>
 <li><a href="">Banco de dados local com Docker - desenvolvimento</a></li>
 <li><a href="">Banco de dados Kubernetes - desenvolvimento</a></li>
 <li><a href="">Banco de dados Google SQL - produção</a></li>
@@ -24,11 +24,9 @@
 <hr>
 
 ### 1) Requisitos
-> instale o <a href="visual studio code">visual studio code</a>
-
-> siga as instruções <a href="https://github.com/codeedu/wsl2-docker-quickstart">deste tutorial</a> para fazer a instalação do wsl e docker no windows.
-
-### <li>Instalar o nodejs e o npm</li>
+<li><a href="visual studio code">Visual studio code</a></li>
+<li><a href="https://learn.microsoft.com/pt-br/windows/wsl/install">Subsistema do Windows para Linux</a></li>
+<li>Instalar o nodejs e o npm</li>
 <ul>
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>sudo apt-get install curl</code><br><code>curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash</code><br><code>nvm install --lts</code><br><code>nvm install node</code><br><code></code></pre>
