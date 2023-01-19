@@ -39,7 +39,7 @@
 <li><a href="visual studio code">Visual studio code</a></li>
 <li><a href="https://learn.microsoft.com/pt-br/windows/wsl/install">Subsistema do Windows para Linux</a></li>
 <li><a href="https://docs.docker.com/engine/install/ubuntu/">Docker Engine</a></li>
-<li><a href="https://learn.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-wsl">Instalar o nodejs e o npm</a></li>
+<li><a href="https://learn.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-wsl">Nodejs e npm</a></li>
 <li><a href="https://www.youtube.com/watch?v=7kZODMP8bs0&ab_channel=HansM.Boron">Zshell (opcional)</a>
 <li><a href="https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/">kubernets</a></li>
 <li><a href="https://cloud.google.com/sdk/docs/install#deb">gcloud cli</a></li>
