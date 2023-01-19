@@ -163,6 +163,7 @@ Uma observação importante é que, no arquivo Dockerfile, a versão @nestjs ins
 /dist
 /node_modules
 .env
+/.docker/postgres/pgdata
 <br># Logs
 logs
 *.log
@@ -203,8 +204,9 @@ lerna-debug.log*
   <pre class="notranslate"><code>version: '3'
 services:
   app:
+    container_name: api_nestjs_primeiros_passos
     build: .
-    entrypoint: .docker/entrypoint.sh
+    entrypoint: ./.docker/entrypoint.sh
     ports:
       - 3000:3000
     environment:
@@ -214,21 +216,20 @@ services:
       DB_USER: postgres
       DB_NAME: "nestjs_primeiros_passos"
     volumes:
-      - ./:/home/node/app
+      - .:/home/node/app
     depends_on:
-      - postgres<br><br>
+      - postgres
+<br>
   postgres:
-    image: postgres:latest
+    build: .docker/postgres
+    container_name: nestjs_primeiros_passos_postgres
     restart: always
-    ports:
-      - 5432:5432
+    tty: true
     environment:
-      DB_PASS: pgpass
-      DB_USER: postgres
-      DB_NAME: "nestjs_primeiros_passos"
-      PG_DATA: /var/lib/postgresql/data
+      POSTGRES_PASSWORD: pgpass
+      POSTGRES_DB: "nestjs_primeiros_passos"
     volumes:
-      - ./pgdata/data:/var/lib/postgresql/data
+      - ./.docker/postgres/pgdata:/var/lib/postgresql/data
 </code></pre>
 </div>
 
@@ -242,9 +243,9 @@ Insira os comando abaixo no arquivo entrypoint.sh:
 <br>
 npm install
 <br>
-npm run start:dev
+npm run migration:run
 <br>
-npm run migration:run</code></pre>
+npm run start:dev</code></pre>
 </div>
     
 <p>Para evitar a falha de permissão de acesso para o docker, execute o comando:</p>
@@ -369,6 +370,19 @@ export default new DataSource({
 } as DataSourceOptions);
 </code></pre>
 </div>
+
+<p>Por ultimo, vamos criar um arquivo <i>Dockerfile</i> que será o responsável por configurar a imagem postgres e o usuário padrão:</p>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+  <pre class="notranslate"><code>vim .docker/posgres/Dockerfile</code></pre>
+</div>
+Insira no arquivo as seguintes configurações:
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+  <pre class="notranslate"><code>FROM postgres:11
+<br>
+RUN usermod -u 1000 postgres
+</code></pre>
+</div>
+
 
 </ul>
 
