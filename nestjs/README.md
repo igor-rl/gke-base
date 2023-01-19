@@ -22,8 +22,8 @@
 <li><a href="#criando-o-projeto">Criando o projeto</a></li>
 <li><a href="#configurações-do-ambiente-de-desenvolvimento">Configurações do ambiente de desenvolvimento</a></li>
 <ul>
-  <li><a href="#">Compilador</a></li>
-  <li><a href="#">Docker</a></li>
+  <li><a href="#compilador-opcional">Compilador</a></li>
+  <li><a href="#docker">Docker</a></li>
 </ul>
 <li><a href="#">Banco de dados POstgreSQL</a></li>
 <li><a href="#">Criando CRUD produtos</a></li> <!--  -->
