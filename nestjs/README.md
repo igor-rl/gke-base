@@ -26,7 +26,8 @@
   <li><a href="#docker">Docker</a></li>
   <li><a href="#nestcli">Nest/cli</a></li>
 </ul>
-<li><a href="#">Banco de dados POstgreSQL</a></li>
+<li><a href="#configurações-de-acesso-ao-postgresql">Configurações de acesso ao PostgreSQL</a></li>
+<li><a href="#primeiro-teste-com-docker">Primeiro teste com docker</a></li>
 <li><a href="#">Criando CRUD produtos</a></li> <!--  -->
 <li><a href="#">Primeiro teste local - desenvolvimento</a></li> <!-- .env e sobe app angular front-->
 <li><a href="#">Login</a></li> <!--  -->
@@ -117,28 +118,39 @@
 
 <p>Dentro deste arquivo, insira os comandos:</p>
 <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-  <pre class="notranslate"><code>FROM node:18.6.0-alpine3.16
-<br>
+  <pre class="notranslate"><code>FROM node:18.6.0-alpine3.16 as dev
 RUN apk add --no-cache bash git
 <br>
-RUN npm install -g @nestjs/cli
-<br>
-RUN touch /home/node/.bashrc | echo "PS1='\w\$ '" >> /home/node/.bashrc
-<br>
 WORKDIR /home/node/app
+COPY package*.json ./
 <br>
-COPY ./package.json ./
-<br>
-COPY ./tsconfig.json ./
-<br>
-RUN npm install
+RUN npm install -g @nestjs/cli^9.0.0 --legacy-peer-deps
 <br>
 COPY . .
 <br>
 RUN npm run build
 <br>
-CMD ["npm", "run", "start"]</code></pre>
+FROM node:18.6.0-alpine3.16 as prod
+RUN apk add --no-cache bash git
+<br>
+ARG NODE_ENV =production 
+ENV NODE_ENV =${ NODE_ENV }
+<br>
+WORKDIR /home/node/app 
+<br>
+COPY ./package.json ./
+<br>
+COPY ./tsconfig.json ./
+<br>
+RUN npm install --production
+<br>
+COPY . .
+<br>
+COPY --from=dev /home/node/app/dist ./dist
+<br>
+CMD ["node", "dist/main"]</code></pre>
 </div>
+Uma observação importante é que, no arquivo Dockerfile, a versão @nestjs instalada deve ser a mesma que a especificada no arquivo package.json em "devDependencies": {"@nestjs/cli": "[versão]"}. No na fase de criação deste projeto, a versão 
 
 <p>Para evitar subir arquivos desnecessários para nosso repositório do docker, criaremos o arquivo <i>.dockerignore</i></p>
 <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
@@ -195,6 +207,12 @@ services:
     entrypoint: .docker/entrypoint.sh
     ports:
       - 3000:3000
+    environment:
+      INSTANCE_HOST: "postgres"
+      DB_PORT: 5432
+      DB_PASS: pgpass
+      DB_USER: postgres
+      DB_NAME: "nestjs_primeiros_passos"
     volumes:
       - ./:/home/node/app
     depends_on:
@@ -205,9 +223,9 @@ services:
     ports:
       - 5432:5432
     environment:
-      POSTGRES_PASSWORD: pgpass
-      POSTGRES_USER: postgres
-      POSTGRES_DB: "nestjs_primeiros_passos"
+      DB_PASS: pgpass
+      DB_USER: postgres
+      DB_NAME: "nestjs_primeiros_passos"
       PG_DATA: /var/lib/postgresql/data
     volumes:
       - ./pgdata/data:/var/lib/postgresql/data
@@ -231,7 +249,7 @@ npm run migration:run</code></pre>
     
 <p>Para evitar a falha de permissão de acesso para o docker, execute o comando:</p>
 <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-  <pre class="notranslate">chmod +x .docker/entrypoint.sh<code></code></pre>
+  <pre class="notranslate"><code>chmod +x .docker/entrypoint.sh</code></pre>
 </div>
 
 </ul>
@@ -263,28 +281,103 @@ npm run migration:run</code></pre>
   ...,
   ...,
   ...,
-}
-</ul>
-
-</ul>
-
-### Banco de dados PostgreSQL
-
-<ul>
-  <p>O nosso banco de dados </p>
-</ul>
-
-    
-<p>Tudo prontos. Já podemos subir o container com a imagem da nossa API:</p>
-<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-  <pre class="notranslate">docker-compose up<code></code></pre>
+}</code></pre>
 </div>
+
+</ul>
+
+</ul>
 
 <hr>
 
-### Configurações de ambiente
+### Configurações de acesso ao PostgreSQL
 <ul>
-<p>A API 'nestjs-primeiros-passos' é a interface responsável por enviar os comando para fazer o CRUD (do inglês - criar, ler, atualizar e deletar) dos dados do nosso banco de dados postgreSQL e retornar o status da solicitação. O próximo passo é criar o banco de dados.</p>
+
+<p>Para que a API nestjs seja capaz de recuperar os dados de conexão e se conectar ao banco de dados postgreSQL, precisamos instalar as seguintes dependências:</p>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+  <pre class="notranslate"><code>npm install @nestjs/typeorm @nestjs/config pg typeorm --save</code></pre>
+</div>
+
+<p>Agora podemos inserir as configurações de conexão no arquivo <i>app.modules.ts</i> da nossa aplicação. Para isso execute o comando:</p>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+  <pre class="notranslate"><code>vim src/app.module.ts</code></pre>
+</div>
+Substitua todo o conteúdo do arquivo por:
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+  <pre class="notranslate"><code>import { Module } from '@nestjs/common';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { TypeOrmModule, TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+<br><br>
+@Module({
+  imports: [
+    TypeOrmModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
+        return {
+          type: 'postgres',
+          host: process.env.INSTANCE_HOST,
+          port: process.env.DB_PORT,
+          database: process.env.DB_NAME,
+          username: process.env.DB_USER,
+          password: process.env.DB_PASS,
+          entities: [__dirname + '/**/*entity{.ts,.js}'],
+          migrations: [__dirname + '/migrations/*{.ts,.js}'],
+          subscribes: [__dirname + '/subscribs/*{.ts,.js}'],
+          extra: {
+            charset: 'utf8mb4_unicode_ci',
+          },
+          synchronize: false,
+          logging: false
+        } as TypeOrmModuleAsyncOptions;
+      },
+    }),
+    ConfigModule.forRoot({
+      envFilePath: '.env',
+      isGlobal: true,
+    }),
+  ],
+  controllers: [AppController],
+  providers: [AppService],
+})
+export class AppModule { }
+</code></pre>
+</div>
+
+<p>O typeorm é a ferramenta que vamos utilizar para auxiliar a criação de objetos voltados para o banco de dados. Ele precisa de um arquivo próprio de comunicação com o banco. Para isso, execute o comando:</p>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+  <pre class="notranslate"><code>vim typeorm.config.ts</code></pre>
+</div>
+Insira no arquivo as seguintes configurações de conexão:
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+  <pre class="notranslate"><code>import { DataSource, DataSourceOptions } from 'typeorm';
+import * as dotenv from 'dotenv';
+<br>
+dotenv.config();
+<br>
+export default new DataSource({
+  type: 'postgres',
+  host: process.env.INSTANCE_HOST,
+  port: Number(process.env.DB_PORT),
+  database: process.env.DB_NAME,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  entities: [__dirname + '/src/**/entities/*{.ts,.js}'],
+  migrations: [__dirname + '/src/migrations/*{.ts,.js}'],
+  subscribers: [__dirname + '/src/subscribers/*{.ts,.js}']
+} as DataSourceOptions);
+</code></pre>
+</div>
+
+</ul>
+
+### Primeiro teste com docker
+    
+<p>Tudo prontos. Já podemos subir o container com a imagem da nossa API e ver o primeiro teste de cominicação:</p>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+  <pre class="notranslate"><code>docker-compose up</code></pre>
+</div>
 
 ### 
 <ul>
