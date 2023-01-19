@@ -20,7 +20,11 @@
 <ul>
 <li><a href="#requisitos-do-sistema-de-desenvolvimento">Requisitos do sistema de desenvolvimento</a></li>
 <li><a href="#criando-o-projeto">Criando o projeto</a></li>
-<li><a href="#">Configurações do ambiente de desenvolvimento</a></li>
+<li><a href="#configurações-do-ambiente-de-desenvolvimento">Configurações do ambiente de desenvolvimento</a></li>
+<ul>
+  <li><a href="#">Compilador</a></li>
+  <li><a href="#">Docker</a></li>
+</ul>
 <li><a href="#">Banco de dados POstgreSQL</a></li>
 <li><a href="#">Criando CRUD produtos</a></li> <!--  -->
 <li><a href="#">Primeiro teste local - desenvolvimento</a></li> <!-- .env e sobe app angular front-->
@@ -73,8 +77,27 @@
     Pare a execução local da api 'nestjs-primeiros-passos':
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate">ctn + C</pre>
+    </div></p>
+
+### <li>Compilador (opcional)</li>
+<p>Inclua as configurações abaixo no arquivo <i>tsconfig.json</i> para que o compilador de desenvolvimento não reinicialize ao identificar modificações nos arquivos da node_modules, dist e .docker. Ele monitorará apenas as alterações na pasta src.</p>
+    <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+        <pre class="notranslate"><code>{
+  "compilerOptions": {
+    ...,
+    ...,
+  },
+  "include": ["src"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".docker"
+  ]
+}</code></pre>
     </div>
-    Na raiz do projeto, crie o arquivo docker-compose.yaml. Dentro deste arquivo, insira o manifesto:
+
+### <li>Docker</li>
+    <p>Na raiz do projeto, crie o arquivo docker-compose.yaml. Dentro deste arquivo, insira o manifesto:</p>
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>version: '3.8'
 services:

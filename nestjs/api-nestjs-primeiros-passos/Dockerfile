@@ -1,31 +1,23 @@
-FROM node:fermium-alpine as dev
-RUN apk --update add postgresql-client
+FROM node:18.6.0-alpine3.16
 
-WORKDIR /usr/src/app
-COPY package*.json ./
+RUN apk add --no-cache bash git
+
+RUN npm install -g @nestjs/cli
+
+RUN touch /home/node/.bashrc | echo "PS1='\w\$ '" >> /home/node/.bashrc
+
+WORKDIR /home/node/app
+
+COPY ./package.json ./
+
+COPY ./tsconfig.json ./
 
 RUN npm install
-
-RUN npm install glob rimraf
 
 COPY . .
 
 RUN npm run build
 
-FROM node:fermium-alpine as prod
-RUN apk --update add postgresql-client
+CMD ["npm", "run", "start"]
 
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
-
-WORKDIR /usr/src/app
-
-COPY package*.json ./
-
-RUN npm install --production
-
-COPY . .
-
-COPY --from=dev /usr/src/app/dist ./dist
-
-CMD ["node", "dist/main"]
+RUN npm run migration:run

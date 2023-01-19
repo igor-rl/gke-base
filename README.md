@@ -269,6 +269,10 @@ kubectl delete pvc nome_do_pv</code></pre>
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>docker-compose up</code></pre>
     </div>
+    permissão
+    <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+        <pre class="notranslate"><code>sudo chmod +X ./</code></pre>
+    </div>
     criar imagem para dockerhub
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
         <pre class="notranslate"><code>docker build -t usuario-docker/nome_da_imagem:0.0.0 .</code></pre>
