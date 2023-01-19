@@ -24,6 +24,7 @@
 <ul>
   <li><a href="#compilador-opcional">Compilador</a></li>
   <li><a href="#docker">Docker</a></li>
+  <li><a href="#nestcli">Nest/cli</a></li>
 </ul>
 <li><a href="#">Banco de dados POstgreSQL</a></li>
 <li><a href="#">Criando CRUD produtos</a></li> <!--  -->
@@ -235,7 +236,7 @@ npm run migration:run</code></pre>
 
 </ul>
 
-### <li>Comandos do @nest/cli</li>
+### <li>Nest/cli</li>
 <ul>
 
 <p>Para facilitar a execussão dos comandos @nest/cli, vamos adicionar alguns scripts no arquivo <i>package.json</i>.</p>
