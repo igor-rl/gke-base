@@ -76,7 +76,7 @@
     </div>
     Na raiz do projeto, crie o arquivo docker-compose.yaml. Dentro deste arquivo, insira o manifesto:
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-        <pre class="notranslate">version: '3.8'
+        <pre class="notranslate"><code>version: '3.8'
 services:
   api:
     container_name: "hrm_api_${NODE_ENV}"
@@ -99,19 +99,19 @@ services:
       - /usr/src/app/node_modules
     restart: unless-stopped
 networks:
-  nesjs-network:</pre>
+  nesjs-network:</code></pre>
     </div>
     Na raiz do projeto, crie o arquivo .env que conterá todas as nossas variáveis de ambiente:
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-        <pre class="notranslate">NODE_ENV=dev</pre>
+        <pre class="notranslate"><code>NODE_ENV=dev</code></pre>
     </div>
     Na raiz do projeto, crie o arquivo .Dockerfile e insira os seguintes comandos no arquivo:
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-        <pre class="notranslate">NODE_ENV=dev</pre>
+        <pre class="notranslate"><code>NODE_ENV=dev</code></pre>
     </div>
     Para evitar subir arquivos desnecessários para nosso repositório do docker, crie o arquivo .dockerignore na raiz do projeto, copie e cole dentro dele o texto abaixo:
     <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-        <pre class="notranslate"># compiled output
+        <pre class="notranslate"><code># compiled output
 /dist
 /node_modules
 <br># Logs
@@ -142,7 +142,7 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
-.env</pre>
+.env</code></pre>
     </div>
 </ul>
 
