@@ -1,9 +1,25 @@
-version: '3.8'
+version: '3'
 services:
   app:
+    container_name: api_nestjs_primeiros_passos
     build: .
     entrypoint: .docker/entrypoint.sh
     ports:
       - 3000:3000
     volumes:
       - ./:/home/node/app
+    depends_on:
+      - postgres
+  
+  postgres:
+    image: postgres:latest
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: pgpass
+      POSTGRES_USER: postgres
+      POSTGRES_DB: "nestjs_primeiros_passos"
+      PG_DATA: /var/lib/postgresql/data
+    volumes:
+      - ./.docker/pgdata:/var/lib/postgresql/data
