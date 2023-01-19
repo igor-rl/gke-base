@@ -199,7 +199,7 @@ lerna-debug.log*
   <pre class="notranslate">vim docker-compose.yaml<code></code></pre>
 </div>
 
-<p>Dentro deste arquivo, insira as configurações do container da aplicação e do banco de dados PosgreSQL :</p>
+<p>Dentro deste arquivo, insira as configurações do container da aplicação e do banco de dados PostgreSQL :</p>
 <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
   <pre class="notranslate"><code>version: '3'
 services:
@@ -373,7 +373,7 @@ export default new DataSource({
 
 <p>Por ultimo, vamos criar um arquivo <i>Dockerfile</i> que será o responsável por configurar a imagem postgres e o usuário padrão:</p>
 <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-  <pre class="notranslate"><code>vim .docker/posgres/Dockerfile</code></pre>
+  <pre class="notranslate"><code>vim .docker/postgres/Dockerfile</code></pre>
 </div>
 Insira no arquivo as seguintes configurações:
 <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
