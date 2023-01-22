@@ -11,7 +11,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       useFactory: (configService: ConfigService) => {
         return {
           type: 'postgres',
-          host: process.env.INSTANCE_HOST,
+          host: process.env.INSTANCE_HOST, 
           port: process.env.DB_PORT,
           database: process.env.DB_NAME,
           username: process.env.DB_USER,

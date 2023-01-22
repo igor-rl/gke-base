@@ -18,8 +18,8 @@ services:
       - postgres
   
   postgres:
-    build: .docker/postgres
-    container_name: nestjs_primeiros_passos_postgres
+    image: postgres
+    container_name: postgresql
     restart: always
     tty: true
     environment:

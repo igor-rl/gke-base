@@ -202,6 +202,7 @@ lerna-debug.log*
 <p>Dentro deste arquivo, insira as configurações do container da aplicação e do banco de dados PostgreSQL :</p>
 <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
   <pre class="notranslate"><code>version: '3'
+version: '3'
 services:
   app:
     container_name: api_nestjs_primeiros_passos
@@ -221,8 +222,8 @@ services:
       - postgres
 <br>
   postgres:
-    build: .docker/postgres
-    container_name: nestjs_primeiros_passos_postgres
+    image: postgres:12
+    container_name: postgresql
     restart: always
     tty: true
     environment:
@@ -230,6 +231,7 @@ services:
       POSTGRES_DB: "nestjs_primeiros_passos"
     volumes:
       - ./.docker/postgres/pgdata:/var/lib/postgresql/data
+
 </code></pre>
 </div>
 
@@ -243,9 +245,9 @@ Insira os comando abaixo no arquivo entrypoint.sh:
 <br>
 npm install
 <br>
-npm run migration:run
+npm run start:dev
 <br>
-npm run start:dev</code></pre>
+npm run migration:run</code></pre>
 </div>
     
 <p>Para evitar a falha de permissão de acesso para o docker, execute o comando:</p>
@@ -387,14 +389,76 @@ RUN usermod -u 1000 postgres
 </ul>
 
 ### Primeiro teste com docker
-    
-<p>Tudo prontos. Já podemos subir o container com a imagem da nossa API e ver o primeiro teste de cominicação:</p>
+<ul>    
+<p>Tudo prontos. Já podemos subir o container com a imagem da nossa API e ver o primeiro teste de cominicação. Mas primeiro precisamos dar permissão para que o container da nossa aplicação possa alterar os arquivos locais. Depois podemos subir nossa aplicação:</p>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+  <pre class="notranslate"><code>sudo chmod +x ./.docker/entrypoint.sh && sudo chmod -R 777 .</code></pre>
+</div>
 <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
   <pre class="notranslate"><code>docker-compose up</code></pre>
 </div>
+</ul>
 
-### 
+### Adicionando CORS e a documentação SWAGGER
 <ul>
+<p>O cors é uma configuração que limita requisições da API apenas vindas de urls expecíficas. A documentação Swagger facilita a visualização e os testes da API. Para adicionar esses serviços, primeiro instale as dependências:</p>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+  <pre class="notranslate"><code>npm i express-basic-auth @nestjs/swagger</code></pre>
+</div>
+<p>Agora para configurar o cors e a documentação swagger, substituia o código do arquivo <i>main.ts</i>...</p>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+  <pre class="notranslate"><code>vim src/main.ts</code></pre>
+</div>
+<p>... por:</p>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+  <pre class="notranslate"><code>import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as basicAuth from 'express-basic-auth';
+import { AppModule } from './app.module';
+<br>
+const SWAGGER_ENVS = ['local', 'dev', 'staging'];
+<br>
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+<br>
+  if (SWAGGER_ENVS.includes(process.env.NODE_ENV)) {
+    app.use(['/docs', '/docs-json'], basicAuth({
+      challenge: true,
+      users: {
+        [process.env.SWAGGER_USER]: process.env.SWAGGER_PASSWORD,
+      },
+    }));
+<br>
+    const config = new DocumentBuilder()
+    .setTitle('Hostwit API Loja Virtual')
+    .setVersion('1.0')
+    .addTag('Auth', 'Recursos relacionados a autenticação.')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        name: 'JWT',
+        description: 'Enter JWT token',
+        in: 'header',
+      },
+      'JWT-auth', // This name here is important for matching up with @ApiBearerAuth() in your controller!
+    )
+    .setDescription('<h3>API de recursos relacionados à <i>Api Nestjs Primeiros Passos</i> desenvolvida por Igor Lage.</h3><br><hr><h3>Baixe a documentação para insuminia</h3><a href="https://insomnia.rest/run/?label=My%20API&uri=http%3A%2F%2Flocalhost%3A3000%2Fapi-json" target="_blank"><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"></a><hr><h3>Explanação</h3><p>Esta API faz parte de uma gama de recursos complexos e que operam entre si para gerenciar e armazenar dados dos aplicativos desenvolvidos pela Hostwit.<br><i>Data de implantação: 2022</i><br><i>Desenvolvedor responsável: Igor Lage</i></p><hr><h3>Atorização é necessária para ter acesso à recursos específicos.</h3>')
+    .build();
+<br>
+    const document = SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup('docs', app, document);
+  }
+<br>
+  await app.listen(process.env.PORT || 3000)
+  console.log(`Application is running on: ${await app.getUrl()}`);
+  console.log(`See the documentation on: ${await app.getUrl()}/docs`);
+  console.log(`Download documentation from: ${await app.getUrl()}/docs-json`);
+<br>
+}
+bootstrap();</code></pre>
+</div>
 </ul>
 
 ### 

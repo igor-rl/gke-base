@@ -2,6 +2,6 @@
 
 npm install
 
-npm run migration:run
-
 npm run start:dev
+
+npm run migration:run
