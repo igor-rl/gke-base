@@ -26,7 +26,7 @@ async function bootstrap() {
     }));
 
     const config = new DocumentBuilder()
-    .setTitle('API nestjs primeiros passos')
+    .setTitle('API RESTFULL - PRIMEIROS PASSOS COM NESTJS')
     .setVersion('1.0')
     .addTag('Auth', 'Recursos relacionados a autenticação.')
     .addBearerAuth(
@@ -40,7 +40,7 @@ async function bootstrap() {
       },
       'JWT-auth', // This name here is important for matching up with @ApiBearerAuth() in your controller!
     )
-    .setDescription('<h3>API de recursos relacionados à <i>API nestjs primeiros passos</i> desenvolvida por Igor Lage.</h3><br><hr><h3>Baixe a documentação para insuminia</h3><a href="https://insomnia.rest/run/?label=My%20API&uri=http%3A%2F%2Flocalhost%3A3000%2Fapi-json" target="_blank"><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"></a><hr><h3>Explanação</h3><p>Esta API faz parte de uma gama de recursos complexos e que operam entre si para gerenciar e armazenar dados dos aplicativos desenvolvidos pela Hostwit.<br><i>Data de implantação: 2023</i><br><i>Desenvolvedor responsável: Igor Lage</i></p><hr><h3>Atorização é necessária para ter acesso à recursos específicos.</h3>')
+    .setDescription('<h3>API de recursos relacionados à <i>API RESTFULL - PRIMEIROS PASSOS COM NESTJS</i> desenvolvida por Igor Lage.</h3><br><hr><h3>Baixe a documentação para insuminia</h3><a href="https://insomnia.rest/run/?label=My%20API&uri=http%3A%2F%2Flocalhost%3A3000%2Fapi-json" target="_blank"><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"></a><hr><h3>Explanação</h3><p>Esta API faz parte de uma gama de recursos complexos e que operam entre si para gerenciar e armazenar dados dos aplicativos desenvolvidos pela Hostwit.<br><i>Data de implantação: 2023</i><br><i>Desenvolvedor responsável: Igor Lage</i></p><hr><h3>Atorização é necessária para ter acesso à recursos específicos.</h3>')
     .build();
 
     const document = SwaggerModule.createDocument(app, config);
