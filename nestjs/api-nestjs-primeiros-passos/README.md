@@ -13,8 +13,6 @@
   <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
 
 
-
-
 ![vscode](https://img.shields.io/badge/VSCode-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white)
 ![windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
 ![ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)
@@ -25,7 +23,7 @@
 ![nestjs](https://img.shields.io/badge/nestjs-E0234E?style=for-the-badge&logo=nestjs&logoColor=white)
 ![postgres](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 
-<p>Este guia de estudo exemplifica como criar um projeto nestjs de uma API Restfull. A aplicação 'nestjs-primeiros-passos' fornece todos os passos iniciais para criar uma api restfull e configurações avançadas utilizando o nestjs. Dentre os assuntos abordados, esse guia contém, por exemplo, as configurações de ambiente para se conectar com o banco de dados postgreSQL, produzir a documentação da aplicação com o swagger e fazer o deploy da aplicação no GKE do Google Cloud. Você pode testar a aplicação produzida com este material clicando <a href="#">aqui</a>.</p>
+<p>Este guia de estudo exemplifica como criar um projeto nestjs de uma API Restfull. A aplicação 'API RESTFULL - PRIMEIROS PASSOS COM NESTJS' fornece todos os passos iniciais para criar uma api restfull e configurações avançadas utilizando o nestjs. Dentre os assuntos abordados, esse guia contém, por exemplo, as configurações de ambiente para se conectar com o banco de dados postgreSQL, produzir a documentação da aplicação com o swagger e fazer o deploy da aplicação no GKE do Google Cloud. Você pode testar a aplicação produzida com este material clicando <a href="#">aqui</a>.</p>
 
 <p>Esse material faz parte da estrutura do projeto 'ARQUIVOS BASE PARA IMPLANTAR UM PROJETO NO GKE' produzido por Igor Lage.</p>
 
@@ -38,7 +36,6 @@
 <li><a href="#configurações-do-ambiente-de-desenvolvimento">Configurações do ambiente de desenvolvimento</a></li>
 <ul>
   <li><a href="#compilador-opcional">Compilador</a></li>
-  <li><a href="#docker">Docker</a></li>
   <li><a href="#nestcli">Nest/cli</a></li>
 </ul>
 <!-- <li><a href="#configurações-de-acesso-ao-postgresql">Configurações de acesso ao PostgreSQL</a></li>
@@ -78,10 +75,33 @@
 
 <p>Crie o projeto:</p>
 <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-    <pre class="notranslate"><code>nest new nestjs-primeiros-passos</code></pre>
+    <pre class="notranslate"><code>nest new API RESTFULL - PRIMEIROS PASSOS COM NESTJS</code></pre>
 </div>
 
-<p>Inicie a aplicação localmente:</p>
+<p>Inicie uma imagem docker do banco de dados postgres
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+    <pre class="notranslate"><code>docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=pgpass -e POSTGRES_DB=db postgres</code></pre>
+</div>
+
+<p>Crie o arquivo <i>.env</i>:</p>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+    <pre class="notranslate"><code>vim .env</code></pre>
+</div>
+
+<p>Insira as variáveis de ambiente no arquivo <i>.env</i>:</p>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+    <pre class="notranslate"><code>INSTANCE_HOST=localhost
+DB_PORT=5432
+DB_NAME=db
+DB_USER=postgres
+DB_PASS=pgpass
+<br>
+SWAGGER_USER=admin
+SWAGGER_PASSWORD=swagger
+NODE_ENV=dev</code></pre>
+</div>
+
+<p>Inicie a aplicação localmente em modo de desenvolvimento:</p>
 <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
     <pre class="notranslate"><code>npm run start:dev</code></pre>
 </div>
@@ -95,11 +115,6 @@
 
 ### Configurações do ambiente de desenvolvimento
 <ul>
-    <p>Neste guia, não vamos fazer os testes localmente. Vamos subir nossas aplicações em containers utilizando os recursos do Docker Engine e docker-compose. Isso vai nos ajudar a simular a aplicação o mais próximo o possível do ambiente de produção. Assim, vamos ver em tempo real como ela vai se comportar quando estiver implantada num provedor de nuvem.</p>
-    Pare a execução local da api 'nestjs-primeiros-passos':</p>
-    <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-        <pre class="notranslate">ctn + C</pre>
-    </div>
 
 ### <li>Compilador (opcional)</li>
 
@@ -140,7 +155,7 @@ RUN apk add --no-cache bash git
 WORKDIR /home/node/app
 COPY package*.json ./
 <br>
-RUN npm install -g @nestjs/cli^9.0.0 --legacy-peer-deps
+RUN npm install --legacy-peer-deps
 <br>
 COPY . .
 <br>
@@ -166,7 +181,6 @@ COPY --from=dev /home/node/app/dist ./dist
 <br>
 CMD ["npm", "run", "start"]</code></pre>
 </div>
-Uma observação importante é que, no arquivo Dockerfile, a versão @nestjs instalada deve ser a mesma que a especificada no arquivo package.json em "devDependencies": {"@nestjs/cli": "[versão]"}. No na fase de criação deste projeto, a versão 
 
 <p>Para evitar subir arquivos desnecessários para nosso repositório do docker, criaremos o arquivo <i>.dockerignore</i></p>
 <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
@@ -179,68 +193,6 @@ Uma observação importante é que, no arquivo Dockerfile, a versão @nestjs ins
 /dist
 /node_modules
 .env</code></pre>
-</div>
-
-
-<!-- <p>Na raiz do projeto, crie o arquivo <i>docker-compose.yaml</i>.
-<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-  <pre class="notranslate">vim docker-compose.yaml<code></code></pre>
-</div>
-
-<p>Dentro deste arquivo, insira as configurações do container da aplicação e do banco de dados PostgreSQL :</p>
-<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-  <pre class="notranslate"><code>version: '3'
-version: '3'
-services:
-  app:
-    container_name: api_nestjs_primeiros_passos
-    build: .
-    entrypoint: ./.docker/entrypoint.sh
-    ports:
-      - 3000:3000
-    environment:
-      INSTANCE_HOST: "postgres"
-      DB_PORT: 5432
-      DB_PASS: pgpass
-      DB_USER: postgres
-      DB_NAME: "nestjs_primeiros_passos"
-    volumes:
-      - .:/home/node/app
-    depends_on:
-      - postgres
-<br>
-  postgres:
-    image: postgres:12
-    container_name: postgresql
-    restart: always
-    tty: true
-    environment:
-      POSTGRES_PASSWORD: pgpass
-      POSTGRES_DB: "nestjs_primeiros_passos"
-    volumes:
-      - ./.docker/postgres/pgdata:/var/lib/postgresql/data
-
-</code></pre>
-</div>
-
-A pasta <i>.docker</i> irá armazenar o arquivo <i>entypoint.sh</i> e armazenará o volume do banco de dados postgres para não perdermos os dados quando o container for finalizado.
-<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-  <pre class="notranslate">vim .docker/entrypoint.sh<code></code></pre>
-</div>
-Insira os comando abaixo no arquivo entrypoint.sh:
-<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-    <pre class="notranslate"><code>#!/bin/sh
-<br>
-npm install
-<br>
-npm run start:dev
-<br>
-npm run migration:run</code></pre>
-</div> -->
-    
-<p>Para evitar a falha de permissão de acesso para o docker, execute o comando:</p>
-<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-  <pre class="notranslate"><code>sudo chmod +x ./.docker/entrypoint.sh && sudo chmod -R 777 .</code></pre>
 </div>
 
 </ul>
@@ -284,7 +236,7 @@ npm run migration:run</code></pre>
 ### Configurações de acesso ao PostgreSQL
 <ul>
 
-<p>Para que a API nestjs seja capaz de recuperar os dados de conexão e se conectar ao banco de dados postgreSQL, precisamos instalar as seguintes dependências:</p>
+<p>Para que a API nestjs seja capaz de recuperar os dados de conexão e conectar ao banco de dados postgreSQL, precisamos instalar as seguintes dependências:</p>
 <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
   <pre class="notranslate"><code>npm install @nestjs/typeorm @nestjs/config pg typeorm --save</code></pre>
 </div>
@@ -363,17 +315,6 @@ export default new DataSource({
 
 
 </ul>
-
-<!-- ### Primeiro teste com docker
-<ul>    
-<p>Tudo prontos. Já podemos subir o container com a imagem da nossa API e ver o primeiro teste de cominicação. Mas primeiro precisamos dar permissão para que o container da nossa aplicação possa alterar os arquivos locais. Depois podemos subir nossa aplicação:</p>
-<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-  <pre class="notranslate"><code>sudo chmod +x ./.docker/entrypoint.sh && sudo chmod -R 777 .</code></pre>
-</div>
-<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-  <pre class="notranslate"><code>docker-compose up</code></pre>
-</div>
-</ul> -->
 
 ### Adicionando CORS e a documentação SWAGGER
 <ul>
