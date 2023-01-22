@@ -78,9 +78,9 @@
     <pre class="notranslate"><code>nest new API RESTFULL - PRIMEIROS PASSOS COM NESTJS</code></pre>
 </div>
 
-<p>Inicie uma imagem docker do banco de dados postgres
+<p>Inicie uma imagem docker do banco de dados postgres e vincule sua porta local '5432' à porta '5432' do container. 
 <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-    <pre class="notranslate"><code>docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=pgpass -e POSTGRES_DB=db postgres</code></pre>
+    <pre class="notranslate"><code>docker run --rm -d -p 5432:5432 -e POSTGRES_PASSWORD=pgpass -e POSTGRES_DB=db postgres</code></pre>
 </div>
 
 <p>Crie o arquivo <i>.env</i>:</p>
