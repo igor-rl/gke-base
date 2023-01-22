@@ -28,7 +28,7 @@
 </ul>
 <li><a href="#configurações-de-acesso-ao-postgresql">Configurações de acesso ao PostgreSQL</a></li>
 <li><a href="#primeiro-teste-com-docker">Primeiro teste com docker</a></li>
-<li><a href="#">Criando CRUD produtos</a></li> <!--  -->
+<li><a href="#adicionando-cors-e-a-documentação-swagger">Adicionando CORS e a documentação SWAGGER</a></li> <!--  -->
 <li><a href="#">Primeiro teste local - desenvolvimento</a></li> <!-- .env e sobe app angular front-->
 <li><a href="#">Login</a></li> <!--  -->
 <li><a href="#">JWT, autenticação e autorização</a></li>
@@ -444,6 +444,7 @@ async function bootstrap() {
       },
       'JWT-auth', // This name here is important for matching up with @ApiBearerAuth() in your controller!
     )
+    
     .setDescription('<h3>API de recursos relacionados à <i>Api Nestjs Primeiros Passos</i> desenvolvida por Igor Lage.</h3><br><hr><h3>Baixe a documentação para insuminia</h3><a href="https://insomnia.rest/run/?label=My%20API&uri=http%3A%2F%2Flocalhost%3A3000%2Fapi-json" target="_blank"><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"></a><hr><h3>Explanação</h3><p>Esta API faz parte de uma gama de recursos complexos e que operam entre si para gerenciar e armazenar dados dos aplicativos desenvolvidos pela Hostwit.<br><i>Data de implantação: 2022</i><br><i>Desenvolvedor responsável: Igor Lage</i></p><hr><h3>Atorização é necessária para ter acesso à recursos específicos.</h3>')
     .build();
 <br>
