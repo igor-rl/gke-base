@@ -1,9 +1,8 @@
 version: '3'
 services:
-  app:
+  api:
     container_name: api_nestjs_primeiros_passos
-    build: .
-    entrypoint: ./.docker/entrypoint.sh
+    build: ./nestjs/api-nestjs-primeiros-passos
     ports:
       - 3000:3000
     environment:
@@ -16,7 +15,7 @@ services:
       SWAGGER_PASSWORD: swagger
       NODE_ENV: dev
     volumes:
-      - .:/home/node/app
+      - ./nestjs/api-nestjs-primeiros-passos:/home/node/app
     depends_on:
       - postgres
   
@@ -30,4 +29,4 @@ services:
       POSTGRES_PASSWORD: pgpass
       POSTGRES_DB: "nestjs_primeiros_passos"
     volumes:
-      - ./.docker/postgres/pgdata:/var/lib/postgresql/data
+      - ./db/postgres/pgdata:/var/lib/postgresql/data

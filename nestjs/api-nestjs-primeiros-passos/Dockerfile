@@ -28,4 +28,4 @@ COPY . .
 
 COPY --from=dev /home/node/app/dist ./dist
 
-CMD ["node", "dist/main"]
+CMD ["npm", "run", "start:dev"]

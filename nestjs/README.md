@@ -26,8 +26,8 @@
   <li><a href="#docker">Docker</a></li>
   <li><a href="#nestcli">Nest/cli</a></li>
 </ul>
-<li><a href="#configurações-de-acesso-ao-postgresql">Configurações de acesso ao PostgreSQL</a></li>
-<li><a href="#primeiro-teste-com-docker">Primeiro teste com docker</a></li>
+<!-- <li><a href="#configurações-de-acesso-ao-postgresql">Configurações de acesso ao PostgreSQL</a></li>
+<li><a href="#primeiro-teste-com-docker">Primeiro teste com docker</a></li> -->
 <li><a href="#adicionando-cors-e-a-documentação-swagger">Adicionando CORS e a documentação SWAGGER</a></li> <!--  -->
 <li><a href="#">Primeiro teste local - desenvolvimento</a></li> <!-- .env e sobe app angular front-->
 <li><a href="#">Login</a></li> <!--  -->
@@ -111,6 +111,7 @@
 
 ### <li>Docker</li>
 
+<p>Afim de criarmos nossa imagem docker, vamos criar o arquivo Dockerfile. Esse arquivo é responsável por criar o build da imagem da aplicação e contém alguns comando que instalam as dependências dela no container e startam a aplicação.</p>
 <p>Na raiz do projeto, crie o arquivo <i>Dockerfile</i>.<p/>
 <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
   <pre class="notranslate">vim Dockerfile<code></code></pre>
@@ -148,7 +149,7 @@ COPY . .
 <br>
 COPY --from=dev /home/node/app/dist ./dist
 <br>
-CMD ["node", "dist/main"]</code></pre>
+CMD ["npm", "run", "start"]</code></pre>
 </div>
 Uma observação importante é que, no arquivo Dockerfile, a versão @nestjs instalada deve ser a mesma que a especificada no arquivo package.json em "devDependencies": {"@nestjs/cli": "[versão]"}. No na fase de criação deste projeto, a versão 
 
@@ -162,39 +163,11 @@ Uma observação importante é que, no arquivo Dockerfile, a versão @nestjs ins
   <pre class="notranslate"><code># compiled output
 /dist
 /node_modules
-.env
-/.docker/postgres/pgdata
-<br># Logs
-logs
-*.log
-npm-debug.log*
-pnpm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-lerna-debug.log*
-<br># OS
-.DS_Store
-<br># Tests
-/coverage
-/.nyc_output
-<br># IDEs and editors
-/.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
-<br># IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json</code></pre>
+.env</code></pre>
 </div>
 
 
-<p>Na raiz do projeto, crie o arquivo <i>docker-compose.yaml</i>.
+<!-- <p>Na raiz do projeto, crie o arquivo <i>docker-compose.yaml</i>.
 <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
   <pre class="notranslate">vim docker-compose.yaml<code></code></pre>
 </div>
@@ -248,11 +221,11 @@ npm install
 npm run start:dev
 <br>
 npm run migration:run</code></pre>
-</div>
+</div> -->
     
 <p>Para evitar a falha de permissão de acesso para o docker, execute o comando:</p>
 <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-  <pre class="notranslate"><code>chmod +x .docker/entrypoint.sh</code></pre>
+  <pre class="notranslate"><code>sudo chmod +x ./.docker/entrypoint.sh && sudo chmod -R 777 .</code></pre>
 </div>
 
 </ul>
@@ -373,22 +346,10 @@ export default new DataSource({
 </code></pre>
 </div>
 
-<p>Por ultimo, vamos criar um arquivo <i>Dockerfile</i> que será o responsável por configurar a imagem postgres e o usuário padrão:</p>
-<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-  <pre class="notranslate"><code>vim .docker/postgres/Dockerfile</code></pre>
-</div>
-Insira no arquivo as seguintes configurações:
-<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-  <pre class="notranslate"><code>FROM postgres:11
-<br>
-RUN usermod -u 1000 postgres
-</code></pre>
-</div>
-
 
 </ul>
 
-### Primeiro teste com docker
+<!-- ### Primeiro teste com docker
 <ul>    
 <p>Tudo prontos. Já podemos subir o container com a imagem da nossa API e ver o primeiro teste de cominicação. Mas primeiro precisamos dar permissão para que o container da nossa aplicação possa alterar os arquivos locais. Depois podemos subir nossa aplicação:</p>
 <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
@@ -397,7 +358,7 @@ RUN usermod -u 1000 postgres
 <div class="snippet-clipboard-content notranslate position-relative overflow-auto">
   <pre class="notranslate"><code>docker-compose up</code></pre>
 </div>
-</ul>
+</ul> -->
 
 ### Adicionando CORS e a documentação SWAGGER
 <ul>
@@ -469,7 +430,7 @@ async function bootstrap() {
 bootstrap();</code></pre>
 </div>
 
-<p>Para acessar a documentação swagger acesse: <a href="http://localhost:3000/docs">http://localhost:3000/docs</a>. Use o usuário "admin" e a senha "swagger".
+<p>Para acessar a documentação swagger acesse: <a href="http://localhost:3000/docs">http://localhost:3000/docs</a>. Utilize o usuário "admin" e a senha "swagger".
 
 </ul>
 
