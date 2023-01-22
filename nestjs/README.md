@@ -419,7 +419,16 @@ import { AppModule } from './app.module';
 const SWAGGER_ENVS = ['local', 'dev', 'staging'];
 <br>
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    cors: true,
+  });
+<br>
+  app.enableCors(
+    { 
+      origin: ['https://betterjavacode.com', 'https://www.google.com'],
+      methods: ['POST', 'PUT', 'DELETE', 'GET']
+    }
+  );
 <br>
   if (SWAGGER_ENVS.includes(process.env.NODE_ENV)) {
     app.use(['/docs', '/docs-json'], basicAuth({
@@ -445,7 +454,7 @@ async function bootstrap() {
       'JWT-auth', // This name here is important for matching up with @ApiBearerAuth() in your controller!
     )
     
-    .setDescription('<h3>API de recursos relacionados à <i>Api Nestjs Primeiros Passos</i> desenvolvida por Igor Lage.</h3><br><hr><h3>Baixe a documentação para insuminia</h3><a href="https://insomnia.rest/run/?label=My%20API&uri=http%3A%2F%2Flocalhost%3A3000%2Fapi-json" target="_blank"><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"></a><hr><h3>Explanação</h3><p>Esta API faz parte de uma gama de recursos complexos e que operam entre si para gerenciar e armazenar dados dos aplicativos desenvolvidos pela Hostwit.<br><i>Data de implantação: 2022</i><br><i>Desenvolvedor responsável: Igor Lage</i></p><hr><h3>Atorização é necessária para ter acesso à recursos específicos.</h3>')
+    .setDescription('<h3>API de recursos relacionados à <i>Api Nestjs Primeiros Passos</i> desenvolvida por Igor Lage.</h3><br><hr><h3>Baixe a documentação para insuminia</h3><a href="https://insomnia.rest/run/?label=My%20API&uri=http%3A%2F%2Flocalhost%3A3000%2Fapi-json" target="_blank"><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"></a><hr><h3>Explanação</h3><p>Esta API faz parte de uma gama de recursos complexos e que operam entre si para gerenciar e armazenar dados dos aplicativos desenvolvidos pela Hostwit.<br><i>Data de implantação: 2023</i><br><i>Desenvolvedor responsável: Igor Lage</i></p><hr><h3>Atorização é necessária para ter acesso à recursos específicos.</h3>')
     .build();
 <br>
     const document = SwaggerModule.createDocument(app, config);
@@ -460,6 +469,9 @@ async function bootstrap() {
 }
 bootstrap();</code></pre>
 </div>
+
+<p>Para acessar a documentação swagger, acesse: <a>http://localhost:3000</a>.
+
 </ul>
 
 ### 

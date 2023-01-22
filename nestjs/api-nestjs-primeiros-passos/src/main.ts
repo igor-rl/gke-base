@@ -6,7 +6,16 @@ import { AppModule } from './app.module';
 const SWAGGER_ENVS = ['local', 'dev', 'staging'];
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    cors: true,
+  });
+
+  app.enableCors(
+    { 
+      origin: ['https://betterjavacode.com', 'https://www.google.com'],
+      methods: ['POST', 'PUT', 'DELETE', 'GET']
+    }
+  );
 
   if (SWAGGER_ENVS.includes(process.env.NODE_ENV)) {
     app.use(['/docs', '/docs-json'], basicAuth({
