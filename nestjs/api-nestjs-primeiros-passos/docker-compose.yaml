@@ -12,6 +12,9 @@ services:
       DB_PASS: pgpass
       DB_USER: postgres
       DB_NAME: "nestjs_primeiros_passos"
+      SWAGGER_USER: admin
+      SWAGGER_PASSWORD: swagger
+      NODE_ENV: dev
     volumes:
       - .:/home/node/app
     depends_on:
