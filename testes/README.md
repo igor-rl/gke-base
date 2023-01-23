@@ -2,7 +2,7 @@
 
 <p>Este guia de estudo exemplifica como testar um projeto em containers utilizando Docker e Kubernetes.</p>
 
-<p>Esse material faz parte da estrutura do projeto 'ARQUIVOS BASE PARA IMPLANTAR UM PROJETO NO GKE' produzido por Igor Lage.</p>
+<p>Esse material faz parte da estrutura do projeto <a href="https://github.com/igorRL/gke-base">ARQUIVOS BASE PARA IMPLANTAR UM PROJETO NO GKE</a> produzido por <a href="Igor Lage">Igor Lage</a>.</p>
 
 <hr>
 

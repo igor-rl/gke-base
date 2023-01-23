@@ -25,6 +25,8 @@ Esse guia contém as seguintes configurações:<br>
     <li>cluster-issuer</li>
 </p>
 
+<p>Esse material faz parte da estrutura do projeto <a href="https://github.com/igorRL/gke-base">ARQUIVOS BASE PARA IMPLANTAR UM PROJETO NO GKE</a> produzido por <a href="Igor Lage">Igor Lage</a>.</p>
+
 <hr>
 
 ### 1) Instalando as dependências

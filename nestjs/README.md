@@ -12,7 +12,7 @@
 
 <p>Este guia de estudo exemplifica como criar um projeto nestjs de uma API Restfull. A aplicação 'nestjs-primeiros-passos' fornece todos os passos iniciais para criar uma api restfull e configurações avançadas utilizando o nestjs. Dentre os assuntos abordados, esse guia contém, por exemplo, as configurações de ambiente para se conectar com o banco de dados postgreSQL, produzir a documentação da aplicação com o swagger e fazer o deploy da aplicação no GKE do Google Cloud. Você pode testar a aplicação produzida com este material clicando <a href="#">aqui</a>.</p>
 
-<p>Esse material faz parte da estrutura do projeto 'ARQUIVOS BASE PARA IMPLANTAR UM PROJETO NO GKE' produzido por Igor Lage.</p>
+<p>Esse material faz parte da estrutura do projeto <a href="https://github.com/igorRL/gke-base">ARQUIVOS BASE PARA IMPLANTAR UM PROJETO NO GKE</a> produzido por <a href="Igor Lage">Igor Lage</a>.</p>
 
 <hr>
 
