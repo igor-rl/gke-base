@@ -32,23 +32,15 @@
 ### Índice
 <ul>
 <li><a href="#requisitos-do-sistema-de-desenvolvimento">Requisitos do sistema de desenvolvimento</a></li>
+<li><a href="#executar-a-aplicação-localmente">Executar a aplicação localmente</a></li>
 <li><a href="#criando-o-projeto">Criando o projeto</a></li>
-<li><a href="#configurações-do-ambiente-de-desenvolvimento">Configurações do ambiente de desenvolvimento</a></li>
 <ul>
-  <li><a href="#compilador-opcional">Compilador</a></li>
-  <li><a href="#nestcli">Nest/cli</a></li>
-</ul>
-<!-- <li><a href="#configurações-de-acesso-ao-postgresql">Configurações de acesso ao PostgreSQL</a></li>
-<li><a href="#primeiro-teste-com-docker">Primeiro teste com docker</a></li> -->
-<li><a href="#adicionando-cors-e-a-documentação-swagger">Adicionando CORS e a documentação SWAGGER</a></li> <!--  -->
-<li><a href="#">Primeiro teste local - desenvolvimento</a></li> <!-- .env e sobe app angular front-->
-<li><a href="#">Login</a></li> <!--  -->
-<li><a href="#">JWT, autenticação e autorização</a></li>
-<li><a href="#">Gerar documentação da API com Swagger</a></li>
-<li><a href="#">Vincular a API com o front-end desenvolvido com Angular</a></li>
-<li><a href="#">Teste local final - desenvolvimento</a></li> <!-- .env e sobe app angular front-->
-<li><a href="#">Teste em container com Docker - desenvolvimento</a></li> <!-- .env automático, pvc local -->
-<li><a href="#">Implantar a aplicação no Google kubernetes Engine - produção</a></li> <!-- .env automático, pvc no google -->
+  <li><a href="#configurações-do-ambiente-de-desenvolvimento">Configurações do ambiente de desenvolvimento</a></li>
+  <ul>
+    <li><a href="#compilador-opcional">Compilador</a></li>
+    <li><a href="#nestcli">Nest/cli</a></li>
+  </ul>
+  <li><a href="#adicionando-cors-e-a-documentação-swagger">Adicionando CORS e a documentação SWAGGER</a></li> <!--  -->
 </ul>
 <hr>
 
@@ -63,6 +55,55 @@
 <li><a href="https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/">kubernets</a></li>
 <li><a href="https://cloud.google.com/sdk/docs/install#deb">gcloud cli</a></li>
 </ul>
+<hr>
+
+
+### Executar a aplicação localmente
+<ul>
+
+### <li>Postgres</li>
+
+<p>Crie um container da imagem oficial docker do banco de dados postgres e vincule sua porta local '5432' à porta '5432' do container:
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+    <pre class="notranslate"><code>docker run --rm -d -p 5432:5432 -e POSTGRES_PASSWORD=pgpass -e POSTGRES_DB=db postgres</code></pre>
+</div>
+
+<p>Crie o arquivo <i>.env</i>:</p>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+    <pre class="notranslate"><code>vim .env</code></pre>
+</div>
+
+<p>Insira as variáveis de ambiente no arquivo <i>.env</i>:</p>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+    <pre class="notranslate"><code>INSTANCE_HOST=localhost
+DB_PORT=5432
+DB_NAME=db
+DB_USER=postgres
+DB_PASS=pgpass
+<br>
+SWAGGER_USER=admin
+SWAGGER_PASSWORD=swagger
+NODE_ENV=dev</code></pre>
+</div>
+
+### <li>Aplicação</li>
+<p>Inicie a aplicação localmente em modo de desenvolvimento:</p>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+    <pre class="notranslate"><code>npm run start:dev</code></pre>
+</div>
+
+<p>Pronto! Você já pode acessar a api em <a href="http://localhost:3000">http://localhost:3000</a>. Você também pode fazer o primeiro teste da sua api rodando o comando abaixo. Em ambos os casos você deve receber o retorno "Hello World!".</p>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+    <pre class="notranslate"><code>curl http://localhost:3000</code></pre>
+</div>
+
+<p>Para que você consiga inserir os dados iniciais da aplicação no banco de dados, abra uma nova guia do terminal e execute o comando:</p>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+    <pre class="notranslate"><code>npm run migration:run</code></pre>
+</div>
+
+</ul>
+
 <hr>
 
 ### Criando o projeto
@@ -352,54 +393,6 @@ bootstrap();</code></pre>
 </div>
 
 <p>Para acessar a documentação swagger acesse: <a href="http://localhost:3000/docs">http://localhost:3000/docs</a>. Utilize o usuário "admin" e a senha "swagger".
-
-</ul>
-
-<hr>
-
-### Executar a aplicação localmente
-<ul>
-
-### <li>Postgres</li>
-
-<p>Crie um container da imagem oficial docker do banco de dados postgres e vincule sua porta local '5432' à porta '5432' do container:
-<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-    <pre class="notranslate"><code>docker run --rm -d -p 5432:5432 -e POSTGRES_PASSWORD=pgpass -e POSTGRES_DB=db postgres</code></pre>
-</div>
-
-<p>Crie o arquivo <i>.env</i>:</p>
-<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-    <pre class="notranslate"><code>vim .env</code></pre>
-</div>
-
-<p>Insira as variáveis de ambiente no arquivo <i>.env</i>:</p>
-<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-    <pre class="notranslate"><code>INSTANCE_HOST=localhost
-DB_PORT=5432
-DB_NAME=db
-DB_USER=postgres
-DB_PASS=pgpass
-<br>
-SWAGGER_USER=admin
-SWAGGER_PASSWORD=swagger
-NODE_ENV=dev</code></pre>
-</div>
-
-### <li>Aplicação</li>
-<p>Inicie a aplicação localmente em modo de desenvolvimento:</p>
-<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-    <pre class="notranslate"><code>npm run start:dev</code></pre>
-</div>
-
-<p>Pronto! Você já pode acessar a api em <a href="http://localhost:3000">http://localhost:3000</a>. Você também pode fazer o primeiro teste da sua api rodando o comando abaixo. Em ambos os casos você deve receber o retorno "Hello World!".</p>
-<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-    <pre class="notranslate"><code>curl http://localhost:3000</code></pre>
-</div>
-
-<p>Para que você consiga inserir os dados iniciais da aplicação no banco de dados, abra uma nova guia do terminal e execute o comando:</p>
-<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-    <pre class="notranslate"><code>npm run migration:run</code></pre>
-</div>
 
 </ul>
 
