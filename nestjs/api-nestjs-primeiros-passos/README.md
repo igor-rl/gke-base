@@ -32,16 +32,17 @@
 <li><a href="#requisitos-do-sistema-de-desenvolvimento">Requisitos do sistema de desenvolvimento</a></li>
 <li><a href="#executar-a-aplicação-localmente">Executar a aplicação localmente</a></li>
 <li><a href="#criando-o-projeto">Criando o projeto</a></li>
-  <ul>
-    <li><a href="#configurações-gerais-da-aplicação">Configurações gerais da aplicação</a></li>
-      <ul>
-        <li><a href="#compilador-opcional">Compilador</a></li>
-        <li><a href="#dockerfile">Dockerfile</a></li>
-        <li><a href="#nestcli">Nest/cli</a></li>
-      </ul>
-    <li><a href="#configurações-de-acesso-do-banco-de-dados">Configurações de acesso do banco de dados</a></li>
-    <li><a href="#adicionando-cors-e-a-documentação-swagger">Adicionando CORS e a documentação SWAGGER</a></li>
-  </ul>
+<ul>
+  <li><a href="#configurações-gerais-da-aplicação">Configurações gerais da aplicação</a></li>
+    <ul>
+      <li><a href="#compilador-opcional">Compilador</a></li>
+      <li><a href="#dockerfile">Dockerfile</a></li>
+      <li><a href="#nestcli">Nest/cli</a></li>
+    </ul>
+  <li><a href="#configurações-de-acesso-do-banco-de-dados">Configurações de acesso do banco de dados</a></li>
+  <li><a href="#adicionando-cors-e-a-documentação-swagger">Adicionando CORS e a documentação SWAGGER</a></li>
+</ul>
+<hr>
 
 ### Requisitos do sistema de desenvolvimento
 <ul>
