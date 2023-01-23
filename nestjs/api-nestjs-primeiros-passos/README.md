@@ -34,12 +34,14 @@
 <li><a href="#executar-a-aplicação-localmente">Executar a aplicação localmente</a></li>
 <li><a href="#criando-o-projeto">Criando o projeto</a></li>
   <ul>
-    <li><a href="#configurações-do-ambiente-de-desenvolvimento">Configurações do ambiente de desenvolvimento</a></li>
+    <li><a href="#configurações-gerais-da-aplicação">Configurações gerais da aplicação</a></li>
       <ul>
         <li><a href="#compilador-opcional">Compilador</a></li>
+        <li><a href="#dockerfile">Dockerfile</a></li>
         <li><a href="#nestcli">Nest/cli</a></li>
       </ul>
-    <li><a href="#adicionando-cors-e-a-documentação-swagger">Adicionando CORS e a documentação SWAGGER</a></li> <!--  -->
+    <li><a href="#configurações-de-acesso-do-banco-de-dados">Configurações de acesso do banco de dados</a></li>
+    <li><a href="#adicionando-cors-e-a-documentação-swagger">Adicionando CORS e a documentação SWAGGER</a></li>
   </ul>
 
 ### Requisitos do sistema de desenvolvimento
@@ -143,7 +145,7 @@ NODE_ENV=dev</code></pre>
 }</pre>
 </div>
 
-### <li>Docker</li>
+### <li>Dockerfile</li>
 
 <p>Afim de criarmos nossa imagem docker, vamos criar o arquivo Dockerfile. Esse arquivo é responsável por criar o build da imagem da aplicação e contém alguns comando que instalam as dependências dela no container e startam a aplicação.</p>
 <p>Na raiz do projeto, crie o arquivo <i>Dockerfile</i>.<p/>
@@ -237,7 +239,7 @@ CMD ["npm", "run", "start"]</code></pre>
 
 <hr>
 
-### Configurações de acesso ao banco de dados
+### Configurações de acesso do banco de dados
 <ul>
 
 <p>Para que a API nestjs seja capaz de recuperar os dados de conexão e conectar ao banco de dados postgreSQL, precisamos instalar as seguintes dependências:</p>
