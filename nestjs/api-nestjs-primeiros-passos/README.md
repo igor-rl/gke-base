@@ -30,7 +30,6 @@
 <hr>
 
 ### Índice
-<ul>
 <li><a href="#requisitos-do-sistema-de-desenvolvimento">Requisitos do sistema de desenvolvimento</a></li>
 <li><a href="#executar-a-aplicação-localmente">Executar a aplicação localmente</a></li>
 <li><a href="#criando-o-projeto">Criando o projeto</a></li>
@@ -42,7 +41,6 @@
   </ul>
   <li><a href="#adicionando-cors-e-a-documentação-swagger">Adicionando CORS e a documentação SWAGGER</a></li> <!--  -->
 </ul>
-<hr>
 
 ### Requisitos do sistema de desenvolvimento
 <ul>
