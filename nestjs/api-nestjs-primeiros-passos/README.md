@@ -78,42 +78,7 @@
     <pre class="notranslate"><code>nest new API RESTFULL - PRIMEIROS PASSOS COM NESTJS</code></pre>
 </div>
 
-<p>Inicie uma imagem docker do banco de dados postgres e vincule sua porta local '5432' à porta '5432' do container. 
-<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-    <pre class="notranslate"><code>docker run --rm -d -p 5432:5432 -e POSTGRES_PASSWORD=pgpass -e POSTGRES_DB=db postgres</code></pre>
-</div>
-
-<p>Crie o arquivo <i>.env</i>:</p>
-<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-    <pre class="notranslate"><code>vim .env</code></pre>
-</div>
-
-<p>Insira as variáveis de ambiente no arquivo <i>.env</i>:</p>
-<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-    <pre class="notranslate"><code>INSTANCE_HOST=localhost
-DB_PORT=5432
-DB_NAME=db
-DB_USER=postgres
-DB_PASS=pgpass
-<br>
-SWAGGER_USER=admin
-SWAGGER_PASSWORD=swagger
-NODE_ENV=dev</code></pre>
-</div>
-
-<p>Inicie a aplicação localmente em modo de desenvolvimento:</p>
-<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-    <pre class="notranslate"><code>npm run start:dev</code></pre>
-</div>
-
-<p>Pronto! Você já pode acessar a api em <a href="http://localhost:3000">http://localhost:3000</a>. Você também pode fazer o primeiro teste da sua api rodando o comando abaixo. Em ambos os casos você deve receber o retorno "Hello World!".</p>
-<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
-    <pre class="notranslate"><code>curl http://localhost:3000</code></pre>
-</div>
-</ul>
-<hr>
-
-### Configurações do ambiente de desenvolvimento
+### Configurações gerais da aplicação
 <ul>
 
 ### <li>Compilador (opcional)</li>
@@ -233,7 +198,7 @@ CMD ["npm", "run", "start"]</code></pre>
 
 <hr>
 
-### Configurações de acesso ao PostgreSQL
+### Configurações de acesso ao banco de dados
 <ul>
 
 <p>Para que a API nestjs seja capaz de recuperar os dados de conexão e conectar ao banco de dados postgreSQL, precisamos instalar as seguintes dependências:</p>
@@ -390,23 +355,52 @@ bootstrap();</code></pre>
 
 </ul>
 
-### 
+<hr>
+
+### Executar a aplicação localmente
 <ul>
+
+### <li>Postgres</li>
+
+<p>Crie um container da imagem oficial docker do banco de dados postgres e vincule sua porta local '5432' à porta '5432' do container:
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+    <pre class="notranslate"><code>docker run --rm -d -p 5432:5432 -e POSTGRES_PASSWORD=pgpass -e POSTGRES_DB=db postgres</code></pre>
+</div>
+
+<p>Crie o arquivo <i>.env</i>:</p>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+    <pre class="notranslate"><code>vim .env</code></pre>
+</div>
+
+<p>Insira as variáveis de ambiente no arquivo <i>.env</i>:</p>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+    <pre class="notranslate"><code>INSTANCE_HOST=localhost
+DB_PORT=5432
+DB_NAME=db
+DB_USER=postgres
+DB_PASS=pgpass
+<br>
+SWAGGER_USER=admin
+SWAGGER_PASSWORD=swagger
+NODE_ENV=dev</code></pre>
+</div>
+
+### <li>Aplicação</li>
+<p>Inicie a aplicação localmente em modo de desenvolvimento:</p>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+    <pre class="notranslate"><code>npm run start:dev</code></pre>
+</div>
+
+<p>Pronto! Você já pode acessar a api em <a href="http://localhost:3000">http://localhost:3000</a>. Você também pode fazer o primeiro teste da sua api rodando o comando abaixo. Em ambos os casos você deve receber o retorno "Hello World!".</p>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+    <pre class="notranslate"><code>curl http://localhost:3000</code></pre>
+</div>
+
+<p>Para que você consiga inserir os dados iniciais da aplicação no banco de dados, abra uma nova guia do terminal e execute o comando:</p>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto">
+    <pre class="notranslate"><code>npm run migration:run</code></pre>
+</div>
+
 </ul>
 
-### 
-<ul>
-</ul>
-
-### 
-<ul>
-</ul>
-
-### 
-<ul>
-</ul>
-
-### 
-<ul>
-</ul>
-
+<hr>
