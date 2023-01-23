@@ -3,3 +3,4 @@
 /nestjs/api-nestjs-primeiros-passos/node_modules
 /nestjs/api-nestjs-primeiros-passos/.env
 /nestjs/api-nestjs-primeiros-passos/.docker/postgres/pgdata
+/testes/docker/db
