@@ -391,7 +391,7 @@ async function bootstrap() {
 bootstrap();</code></pre>
 </div>
 
-<p>Para acessar a documentação swagger acesse: <a href="http://localhost:3000/docs">http://localhost:3000/docs</a>. Utilize o usuário "admin" e a senha "swagger".
+<p>Execute a aplicação localmente. Quando tudo estiver pronto, você poderá acessar a documentação swagger em <a href="http://localhost:3000/docs">http://localhost:3000/docs</a>. Utilize o usuário "admin" e a senha "swagger".
 
 </ul>
 
