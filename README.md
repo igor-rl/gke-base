@@ -33,9 +33,9 @@ Esse guia contém as seguintes configurações:<br>
 <p>O primeiro passo é instalar as dependências necessárias para implantar o projeto. Caso o seu sistema operacional seja o windows, será necessário instalar o serviço de wsl (subsistema do linux no windows) para conseguir manipular os containers no seu sistema operacional. Mas se você vai utilizar linux ou macOS, basta instalar o dockerhub em seu sistema operacional.
 </p>
 
-> instale o <a href="visual studio code">visual studio code</a>
+> instale o <a href="https://learn.microsoft.com/pt-br/windows/wsl/tutorials/wsl-vscode">visual studio code</a>
 
-> siga as instruções <a href="https://github.com/codeedu/wsl2-docker-quickstart">deste tutorial</a> para fazer a instalação do wsl e docker no windows.
+> siga as instruções <a href="https://learn.microsoft.com/pt-br/windows/wsl/install">deste tutorial</a> para fazer a instalação do wsl e docker no windows.
 
 ### <li>Instalar o nodejs e o npm</li>
 <ul>
